@@ -1,6 +1,7 @@
-export interface PropertyTypeSetting {
-  id: string;
-  name: string;
+export enum PropertyType {
+  Land = 'Terreno',
+  House = 'Casa',
+  Apartment = 'Apartamento',
 }
 
 export enum PropertyStatus {
@@ -14,7 +15,7 @@ export interface Property {
   id: string;
   ownerId: string;
   title: string;
-  type: string;
+  type: PropertyType;
   description: string;
   city: string;
   neighborhood: string;

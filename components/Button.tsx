@@ -1,6 +1,11 @@
+
+
 import React, { ReactNode } from 'react';
+// FIX: Import HTMLMotionProps and use it instead of ButtonHTMLAttributes.
 import { motion, HTMLMotionProps } from 'framer-motion';
 
+// FIX: Use HTMLMotionProps<'button'> instead of ButtonHTMLAttributes to ensure compatibility
+// with the props expected by `motion.button`, resolving type conflicts for event handlers.
 interface ButtonProps extends HTMLMotionProps<'button'> {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'danger';

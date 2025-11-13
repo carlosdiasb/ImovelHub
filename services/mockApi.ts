@@ -1,17 +1,11 @@
-import { Property, User, PropertyStatus, SystemSettings, PropertyTypeSetting } from '../types';
-
-let mockPropertyTypes: PropertyTypeSetting[] = [
-    { id: '1', name: 'Apartamento' },
-    { id: '2', name: 'Casa' },
-    { id: '3', name: 'Terreno' },
-];
+import { Property, PropertyType, User, PropertyStatus, SystemSettings } from '../types';
 
 let mockProperties: Property[] = [
   {
     id: '1',
     ownerId: '1',
     title: 'Apartamento Moderno no Centro',
-    type: 'Apartamento',
+    type: PropertyType.Apartment,
     description: 'Lindo apartamento com 2 quartos, sala ampla e cozinha planejada. Perfeito para quem busca conforto e praticidade no coração da cidade. Próximo a metrô, shoppings e parques.',
     city: 'São Paulo',
     neighborhood: 'Centro',
@@ -40,7 +34,7 @@ let mockProperties: Property[] = [
     id: '2',
     ownerId: '2',
     title: 'Casa Espaçosa com Piscina',
-    type: 'Casa',
+    type: PropertyType.House,
     description: 'Casa de alto padrão em condomínio fechado. Possui 4 suítes, área gourmet com churrasqueira, piscina e um lindo jardim. Segurança 24 horas e lazer completo para sua família.',
     city: 'Rio de Janeiro',
     neighborhood: 'Barra da Tijuca',
@@ -69,7 +63,7 @@ let mockProperties: Property[] = [
     id: '7',
     ownerId: '1',
     title: 'Anúncio pendente de aprovação',
-    type: 'Casa',
+    type: PropertyType.House,
     description: 'Este anúncio foi pago e agora aguarda a aprovação do administrador.',
     city: 'Florianópolis',
     neighborhood: 'Centro',
@@ -94,7 +88,7 @@ let mockProperties: Property[] = [
     id: '8',
     ownerId: '2',
     title: 'Anúncio aguardando pagamento',
-    type: 'Terreno',
+    type: PropertyType.Land,
     description: 'Este anúncio foi criado e está aguardando o pagamento para ser enviado para aprovação.',
     city: 'Porto Alegre',
     neighborhood: 'Moinhos de Vento',
@@ -131,27 +125,6 @@ const stripPassword = (user: User): Omit<User, 'password'> => {
     const { password, ...rest } = user;
     return rest;
 }
-
-// Property Type APIs
-export const getPropertyTypes = () => simulateDelay(mockPropertyTypes);
-export const addPropertyType = (name: string) => {
-    const newType: PropertyTypeSetting = { id: String(Date.now()), name };
-    mockPropertyTypes.push(newType);
-    return simulateDelay(newType);
-};
-export const updatePropertyType = (id: string, name: string) => {
-    const index = mockPropertyTypes.findIndex(pt => pt.id === id);
-    if (index !== -1) {
-        mockPropertyTypes[index].name = name;
-        return simulateDelay(mockPropertyTypes[index]);
-    }
-    return simulateDelay(null);
-};
-export const deletePropertyType = (id: string) => {
-    mockPropertyTypes = mockPropertyTypes.filter(pt => pt.id !== id);
-    return simulateDelay(true);
-};
-
 
 // Public APIs
 export const getProperties = (filters: any) => {

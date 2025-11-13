@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+// FIX: Import Variants type from framer-motion.
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -14,6 +15,7 @@ import RegistrationValidationPage from './pages/RegistrationValidationPage';
 
 export type Page = 'home' | 'details' | 'dashboard' | 'auth' | 'create' | 'edit' | 'admin' | 'checkout' | 'registrationValidation';
 
+// FIX: Explicitly type pageVariants with Variants from framer-motion to resolve type inference issue.
 const pageVariants: Variants = {
   initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.28, ease: 'easeInOut' } },

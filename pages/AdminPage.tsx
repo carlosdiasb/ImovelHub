@@ -5,13 +5,12 @@ import AdminDashboard from '../components/admin/AdminDashboard';
 import AdminPropertyManager from '../components/admin/AdminPropertyManager';
 import AdminUserManager from '../components/admin/AdminUserManager';
 import AdminSettings from '../components/admin/AdminSettings';
-import AdminPropertyTypeManager from '../components/admin/AdminPropertyTypeManager';
 
 interface AdminPageProps {
     onNavigate: (page: Page) => void;
 }
 
-type AdminSection = 'dashboard' | 'properties' | 'users' | 'propertyTypes' | 'settings';
+type AdminSection = 'dashboard' | 'properties' | 'users' | 'settings';
 
 const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
     const { user } = useAuth();
@@ -38,7 +37,6 @@ const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             case 'dashboard': return <AdminDashboard />;
             case 'properties': return <AdminPropertyManager selectedUserId={selectedUserId} onClearUserFilter={() => setSelectedUserId(null)} />;
             case 'users': return <AdminUserManager onViewUserProperties={handleViewUserProperties} />;
-            case 'propertyTypes': return <AdminPropertyTypeManager />;
             case 'settings': return <AdminSettings />;
             default: return <AdminDashboard />;
         }
@@ -48,7 +46,6 @@ const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
         { id: 'dashboard', label: 'Visão Geral' },
         { id: 'properties', label: 'Gerenciar Anúncios' },
         { id: 'users', label: 'Gerenciar Usuários' },
-        { id: 'propertyTypes', label: 'Tipos de Imóvel' },
         { id: 'settings', label: 'Configurações' },
     ];
 

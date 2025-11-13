@@ -1,7 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { PropertyTypeSetting } from '../types';
-import * as api from '../services/mockApi';
+import React, { useState } from 'react';
+import { PropertyType } from '../types';
 import Button from './Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import Icon from './Icon';
@@ -11,8 +10,7 @@ interface FilterBarProps {
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [propertyTypes, setPropertyTypes] = useState<PropertyTypeSetting[]>([]);
+    const [isOpen, setIsOpen] = useState(true);
   const [filters, setFilters] = useState({
     type: '',
     city: '',
@@ -21,15 +19,6 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
     minArea: 0,
     maxArea: 1000,
   });
-
-  useEffect(() => {
-    const fetchTypes = async () => {
-      const types = await api.getPropertyTypes();
-      setPropertyTypes(types);
-    };
-    fetchTypes();
-  }, []);
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -62,7 +51,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           <label className="block text-sm font-medium text-neutral-medium">Tipo</label>
           <select name="type" onChange={handleInputChange} value={filters.type} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm rounded-md">
             <option value="">Todos</option>
-            {propertyTypes.map(type => <option key={type.id} value={type.name}>{type.name}</option>)}
+            {Object.values(PropertyType).map(type => <option key={type} value={type}>{type}</option>)}
           </select>
         </div>
         <div>

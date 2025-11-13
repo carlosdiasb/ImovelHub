@@ -18,8 +18,6 @@ const DetailPage: React.FC<DetailPageProps> = ({ propertyId, onNavigate }) => {
   const [settings, setSettings] = useState<SystemSettings | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
-  const [message, setMessage] = useState('');
-  const [messageSent, setMessageSent] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -31,7 +29,6 @@ const DetailPage: React.FC<DetailPageProps> = ({ propertyId, onNavigate }) => {
 
       if(propData) {
         setProperty(propData);
-        setMessage(`Olá! Tenho interesse no imóvel '${propData.title}'. Gostaria de mais informações.`);
         setSettings(settingsData);
         if (propData.status === 'Ativo') {
            api.incrementPropertyView(propertyId);
@@ -43,20 +40,22 @@ const DetailPage: React.FC<DetailPageProps> = ({ propertyId, onNavigate }) => {
     fetchData();
   }, [propertyId]);
   
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !property) return;
+  const handleContactClick = () => {
+    if (!property) return;
 
-    console.log('Simulating sending message:', {
-        to: owner?.email,
-        from: user.email,
-        userName: user.name,
-        propertyId: property.id,
-        propertyTitle: property.title,
-        message: message,
-    });
-    
-    setMessageSent(true);
+    if (user) {
+      const contactNumber = property.contactOverride === 'admin' && settings?.adminContactPhone
+        ? settings.adminContactPhone
+        : owner?.phone;
+      
+      if (contactNumber) {
+        window.open(`https://wa.me/${contactNumber}?text=Olá! Tenho interesse no imóvel '${property?.title}'.`, '_blank', 'noopener,noreferrer');
+      } else {
+        alert('Número de contato não disponível.');
+      }
+    } else {
+      onNavigate('auth');
+    }
   };
   
   const handleShare = async () => {
@@ -220,57 +219,10 @@ const DetailPage: React.FC<DetailPageProps> = ({ propertyId, onNavigate }) => {
                     <p className="font-semibold text-neutral-dark">Anunciado por:</p>
                     <p className="text-lg text-neutral-medium mb-4">{owner.name} <span className="text-sm font-semibold text-secondary">({accountTypeLabels[owner.accountType]})</span></p>
                     
-                    {user ? (
-                        messageSent ? (
-                            <motion.div 
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="text-center p-4 bg-green-100 rounded-lg"
-                            >
-                                <div className="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                </div>
-                                <p className="font-semibold text-green-800">Mensagem enviada com sucesso!</p>
-                                <p className="text-sm text-green-700">O anunciante entrará em contato em breve.</p>
-                            </motion.div>
-                        ) : (
-                            <form onSubmit={handleSendMessage} className="space-y-3">
-                                <div>
-                                    <label htmlFor="contact-name" className="block text-xs font-medium text-gray-500">Seu nome</label>
-                                    <input id="contact-name" type="text" value={user.name} readOnly className="mt-1 w-full bg-gray-100 border-gray-300 rounded-md shadow-sm p-2 text-sm" />
-                                </div>
-                                <div>
-                                    <label htmlFor="contact-email" className="block text-xs font-medium text-gray-500">Seu email</label>
-                                    <input id="contact-email" type="email" value={user.email} readOnly className="mt-1 w-full bg-gray-100 border-gray-300 rounded-md shadow-sm p-2 text-sm" />
-                                </div>
-                                <div>
-                                    <label htmlFor="contact-message" className="block text-xs font-medium text-gray-500">Mensagem</label>
-                                    <textarea
-                                        id="contact-message"
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                        rows={4}
-                                        className="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary focus:border-secondary p-2 text-sm"
-                                        required
-                                    />
-                                </div>
-                                <Button type="submit" variant="secondary" className="w-full" disabled={isExpired}>
-                                   Enviar Mensagem
-                                </Button>
-                            </form>
-                        )
-                    ) : (
-                        <div className="text-center p-4 bg-neutral-light rounded-lg border border-gray-200">
-                            <Icon name="user" className="w-8 h-8 mx-auto text-primary mb-2" />
-                            <p className="font-semibold text-primary mb-2">Entre para contatar o anunciante</p>
-                            <p className="text-sm text-neutral-medium mb-4">Veja os detalhes de contato e envie mensagens com facilidade.</p>
-                            <Button onClick={() => onNavigate('auth')} className="w-full">
-                                Entrar ou Criar Conta
-                            </Button>
-                        </div>
-                    )}
-
-                    <Button variant="outline" className="w-full mt-3" onClick={handleShare} disabled={isExpired}>
+                    <Button variant="secondary" className="w-full mb-2" onClick={handleContactClick} disabled={isExpired}>
+                       <Icon name="whatsapp" className="w-5 h-5 mr-2" /> Contatar por WhatsApp
+                    </Button>
+                    <Button variant="outline" className="w-full" onClick={handleShare} disabled={isExpired}>
                          <Icon name="share" className="w-5 h-5 mr-2" /> Compartilhar
                     </Button>
                 </div>
