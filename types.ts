@@ -57,6 +57,18 @@ export interface User {
   creciState?: string; // e.g. 'SP', 'RJ'
   companyName?: string; // Razão Social for imobiliaria
   cnpj?: string; // for imobiliaria
+  documentType?: 'creci_fisico' | 'creci_juridico' | 'cnpj' | 'outro';
+  documentNumber?: string;
+  documentUrl?: string;
+  proofOfAddressUrl?: string;
+  yearsOfExperience?: string;
+  serviceRegions?: string;
+  specialties?: string;
+  professionalWebsite?: string;
+  contactPreference?: 'email' | 'telefone' | 'whatsapp';
+  preferredContactTime?: string;
+  additionalNotes?: string;
+  teamSize?: string;
 }
 
 export interface SystemSettings {
