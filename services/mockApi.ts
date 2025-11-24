@@ -108,57 +108,9 @@ let mockProperties: Property[] = [
 
 const mockUsers: User[] = [
     { id: '1', name: 'Ana Costa', email: 'ana@email.com', password: 'password123', phone: '11987654321', accountType: 'particular', role: 'user', status: 'active', validationStatus: 'not_submitted' },
-    { 
-        id: '2', 
-        name: 'Bruno Lima', 
-        email: 'bruno@email.com', 
-        password: 'password123', 
-        phone: '21912345678', 
-        accountType: 'corretor', 
-        role: 'user', 
-        status: 'active', 
-        validationStatus: 'approved', 
-        creciNumber: '12345-F', 
-        creciState: 'RJ',
-        documentType: 'creci_fisico',
-        documentNumber: '12345-F',
-        documentUrl: 'https://docs.exemplo.com/creci-fisico.pdf',
-        yearsOfExperience: '8',
-        serviceRegions: 'Zona Sul / Centro - RJ',
-        specialties: 'Imóveis residenciais de alto padrão, imóveis corporativos',
-        professionalWebsite: 'https://www.brunolima.com.br',
-        contactPreference: 'whatsapp',
-        preferredContactTime: '09h às 18h',
-        additionalNotes: 'Especialista em clientes internacionais.'
-    },
+    { id: '2', name: 'Bruno Lima', email: 'bruno@email.com', password: 'password123', phone: '21912345678', accountType: 'corretor', role: 'user', status: 'active', validationStatus: 'approved', creciNumber: '12345-F', creciState: 'RJ' },
     { id: '3', name: 'Admin', email: 'admin@email.com', password: 'admin123', phone: '99999999999', accountType: 'particular', role: 'admin', status: 'active', validationStatus: 'not_submitted' },
-    { 
-        id: '4', 
-        name: 'Carlos Dias', 
-        email: 'crdb.carlos@gmail.com', 
-        password: 'password123', 
-        phone: '31988776655', 
-        accountType: 'imobiliaria', 
-        role: 'user', 
-        status: 'active', 
-        validationStatus: 'not_submitted',
-        companyName: 'Imobiliária Dias Ltda.',
-        cnpj: '12.345.678/0001-90',
-        creciNumber: '54321-J',
-        creciState: 'MG',
-        documentType: 'creci_juridico',
-        documentNumber: '54321-J',
-        documentUrl: 'https://docs.exemplo.com/creci-juridico.pdf',
-        proofOfAddressUrl: 'https://docs.exemplo.com/comprovante-endereco.pdf',
-        yearsOfExperience: '12',
-        serviceRegions: 'Belo Horizonte, Nova Lima e região metropolitana',
-        specialties: 'Lançamentos residenciais, imóveis comerciais e alto padrão',
-        professionalWebsite: 'https://www.imobiliariadias.com.br',
-        contactPreference: 'email',
-        preferredContactTime: 'Horário comercial',
-        additionalNotes: 'Equipe dedicada para aprovação de crédito e compliance.',
-        teamSize: '18'
-    }
+    { id: '4', name: 'Carlos Dias', email: 'crdb.carlos@gmail.com', password: 'password123', phone: '31988776655', accountType: 'imobiliaria', role: 'user', status: 'active', validationStatus: 'not_submitted' }
 ];
 
 let mockSystemSettings: SystemSettings = {
